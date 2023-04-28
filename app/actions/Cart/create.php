@@ -10,11 +10,10 @@ $_SESSION['errors'] = [];
 
 if (isset($_GET['product_id'])) {
 
-    $product_id = $_GET['product_id'];
+    $product_id = intval($_GET['product_id']);
     $user_id = auth();
 
     $cart = $database->query("SELECT * FROM `cart` WHERE `product_id` = '$product_id' AND `user_id` = '$user_id'")->fetch(2);
-
 //    Если не пустая карзина
     if (!empty($cart)) {
         $query = "UPDATE `cart` SET count = count + 1 WHERE `id` = " . $cart['id'];

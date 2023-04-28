@@ -2,8 +2,12 @@
 include('app/services/Base.php');
 
 if (isset($_GET['id'])){
-    $id = $_GET['id'];
-    $product = $database->query("SELECT * FROM `products` WHERE `id` = '$id'")->fetch(2);
+    $id = intval($_GET['id']);
+    $product = $database->query("SELECT *, `products`.`id` AS `product_id`, `categories`.`name` AS `category_name` FROM `products`
+        LEFT JOIN `categories` ON `products`.`category_id` = `categories`.`id`
+        LEFT JOIN `users` ON `products`.`user_id` = `users`.`id`
+        WHERE `products`.`id` = $id")->fetch(2);
+    var_dump($product);
 
     if ($product['status_id'] != 2) redirect('');
 }
@@ -32,11 +36,13 @@ if (isset($_GET['id'])){
             </div>
             <div class="p-text">
                 <h3><?= $product['title']; ?></h3>
+                <p><?= $product['name']; ?>:<?= $product['email'] ?></p>
+                <p><?= $product['category_name']; ?></p>
                 <p><?= $product['description']; ?></p>
                 <div class="product-price">
                     <h4><?= $product['price']; ?> ₽</h4>
                     <div class="product-button">
-                        <a href="app/actions/Cart/create.php?product_id=<?= $product['id']; ?>" class="bbtn">В корзину</a>
+                        <a href="app/actions/Cart/create.php?product_id=<?= $product['product_id']; ?>" class="bbtn">В корзину</a>
                     </div>
                 </div>
             </div>

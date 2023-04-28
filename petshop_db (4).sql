@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Апр 27 2023 г., 13:16
+-- Время создания: Апр 28 2023 г., 09:41
 -- Версия сервера: 8.0.30
 -- Версия PHP: 8.0.22
 
@@ -34,13 +34,6 @@ CREATE TABLE `cart` (
   `count` int NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Дамп данных таблицы `cart`
---
-
-INSERT INTO `cart` (`id`, `product_id`, `user_id`, `count`) VALUES
-(1, 2, 1, 3);
-
 -- --------------------------------------------------------
 
 --
@@ -61,6 +54,42 @@ INSERT INTO `categories` (`id`, `name`) VALUES
 (3, 'Лакомства'),
 (4, 'Аксессуары'),
 (5, 'Шлейки');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `orders`
+--
+
+CREATE TABLE `orders` (
+  `id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `product_id` int NOT NULL,
+  `count` int NOT NULL DEFAULT '1',
+  `price` int NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Дамп данных таблицы `orders`
+--
+
+INSERT INTO `orders` (`id`, `user_id`, `product_id`, `count`, `price`, `created_at`) VALUES
+(1, 1, 2, 3, 599, '2023-04-28 05:52:03'),
+(2, 1, 6, 2, 1199, '2023-04-28 05:52:03'),
+(3, 1, 2, 3, 599, '2023-04-28 06:06:50'),
+(4, 1, 6, 2, 1199, '2023-04-28 06:06:50'),
+(5, 1, 2, 3, 599, '2023-04-28 06:07:30'),
+(6, 1, 6, 2, 1199, '2023-04-28 06:07:30'),
+(7, 1, 2, 3, 599, '2023-04-28 06:08:58'),
+(8, 1, 6, 2, 1199, '2023-04-28 06:08:58'),
+(9, 1, 2, 3, 599, '2023-04-28 06:09:37'),
+(10, 1, 6, 2, 1199, '2023-04-28 06:09:37'),
+(11, 1, 2, 3, 599, '2023-04-28 06:10:32'),
+(12, 1, 6, 2, 1199, '2023-04-28 06:10:32'),
+(13, 1, 2, 3, 599, '2023-04-28 06:11:19'),
+(14, 1, 6, 2, 1199, '2023-04-28 06:11:19'),
+(15, 1, 5, 1, 1000, '2023-04-28 06:13:18');
 
 -- --------------------------------------------------------
 
@@ -151,6 +180,12 @@ ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Индексы таблицы `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Индексы таблицы `products`
 --
 ALTER TABLE `products`
@@ -179,13 +214,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `categories`
 --
 ALTER TABLE `categories`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT для таблицы `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT для таблицы `products`

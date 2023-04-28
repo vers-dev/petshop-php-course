@@ -3,7 +3,13 @@ include('app/services/Base.php');
 
 $user_id = auth();
 
-$products = $database->query("SELECT * FROM `cart` LEFT JOIN `products` ON `cart`.`product_id` = `products`.`id` WHERE `cart`.`user_id` = '$user_id'")->fetchAll(2);
+if (!auth()){
+    redirect('');
+}
+
+$products = $database->query("SELECT * FROM `cart` 
+        LEFT JOIN `products` ON `cart`.`product_id` = `products`.`id` 
+        WHERE `cart`.`user_id` = '$user_id'")->fetchAll(2);
 //echo "<pre>";
 //print_r($products);
 //echo "</pre>"
