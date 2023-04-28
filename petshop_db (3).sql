@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Апр 26 2023 г., 13:15
+-- Время создания: Апр 27 2023 г., 13:16
 -- Версия сервера: 8.0.30
 -- Версия PHP: 8.0.22
 
@@ -24,6 +24,26 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `cart`
+--
+
+CREATE TABLE `cart` (
+  `id` int NOT NULL,
+  `product_id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `count` int NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Дамп данных таблицы `cart`
+--
+
+INSERT INTO `cart` (`id`, `product_id`, `user_id`, `count`) VALUES
+(1, 2, 1, 3);
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `categories`
 --
 
@@ -37,7 +57,6 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`) VALUES
-(1, 'Корм для собак'),
 (2, 'Корм для кошек'),
 (3, 'Лакомства'),
 (4, 'Аксессуары'),
@@ -66,9 +85,10 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `title`, `description`, `price`, `img_path`, `category_id`, `status_id`, `user_id`, `created_at`) VALUES
-(2, 'Новый Корм', 'Самый новый самый корм', 399, 'public/products-image/6448db149d9c8.jpg', 1, 2, 1, '2023-04-26 08:04:36'),
-(3, 'Веселый кот', 'С повязкой', 599, 'public/products-image/6448e926b96d9.jpg', 4, 2, 1, '2023-04-26 09:04:38'),
-(4, 'dsfsdfs', 'sdfdsf', 299, 'public/products-image/6448eefb58eef.jpg', 3, 2, 1, '2023-04-26 09:29:31');
+(2, 'Орущий кот', 'Без повязки', 599, 'public/products-image/6448e926b96d9.jpg', 4, 2, 1, '2023-04-26 08:04:36'),
+(4, 'Орущий кот', 'Без повязки', 599, 'public/products-image/6448e926b96d9.jpg', 4, 2, 1, '2023-04-26 09:29:31'),
+(5, 'рыжик', 'Самый рыжий кот', 1000, 'public/products-image/644a3ee4c9cfe.jpg', 2, 2, 1, '2023-04-27 09:22:44'),
+(6, 'Еще белый кот', 'белый кот...', 1199, 'public/products-image/644a3f162308d.jpg', 4, 2, 1, '2023-04-27 09:23:34');
 
 -- --------------------------------------------------------
 
@@ -110,11 +130,19 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`, `created_at`) VALUES
-(1, 'user', 'user@mail.com', '5cc32e366c87c4cb49e4309b75f57d64', 'user', '2023-04-24 14:13:10');
+(1, 'user', 'user@mail.com', '5cc32e366c87c4cb49e4309b75f57d64', 'admin', '2023-04-24 14:13:10');
 
 --
 -- Индексы сохранённых таблиц
 --
+
+--
+-- Индексы таблицы `cart`
+--
+ALTER TABLE `cart`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `cart_ibfk_2` (`user_id`);
 
 --
 -- Индексы таблицы `categories`
@@ -148,6 +176,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT для таблицы `cart`
+--
+ALTER TABLE `cart`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT для таблицы `categories`
 --
 ALTER TABLE `categories`
@@ -157,7 +191,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT для таблицы `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `statuses`
@@ -174,6 +208,13 @@ ALTER TABLE `users`
 --
 -- Ограничения внешнего ключа сохраненных таблиц
 --
+
+--
+-- Ограничения внешнего ключа таблицы `cart`
+--
+ALTER TABLE `cart`
+  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `products`

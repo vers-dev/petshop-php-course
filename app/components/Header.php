@@ -14,7 +14,7 @@
             </ul>
             <ul class="menu">
                 <?php if (auth()): ?>
-                    <li><a href="" class="link">Корзина</a></li>
+                    <li><a href="cart.php" class="link">Корзина</a></li>
                     <li><a href="app/actions/User/logout.php" class="link">Выход</a></li>
                 <?php else: ?>
                     <li><a href="auth.php" class="link">Войти</a></li>

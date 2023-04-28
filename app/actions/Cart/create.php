@@ -34,7 +34,6 @@ if (isset($_GET['product_id'])) {
     }
 
     redirect('cart.php');
-
 }
 
 redirect('product.php');
